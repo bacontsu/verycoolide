@@ -7,6 +7,7 @@ from tkinter.messagebox import *
 from tkinter.filedialog import *
 
 from terminal import Terminal
+from utilities import *
 
 # Reminder that 2.0 is going to be a Alpha Build
 NotepadVer = "VeryCoolIDE Alpha 2.0"
@@ -136,6 +137,8 @@ class Notepad:
         # Scrollbar will adjust automatically according to the content        
         self.__thisScrollBar.config(command=self.__thisTextArea.yview)     
         self.__thisTextArea.config(yscrollcommand=self.__thisScrollBar.set)
+
+        center(self.__root, self.__thisWidth, self.__thisHeight)
       
           
     def __quitApplication(self):
