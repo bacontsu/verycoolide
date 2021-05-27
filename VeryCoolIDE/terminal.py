@@ -139,10 +139,10 @@ class Terminal(tk.Frame):
 
 
 
-root = tk.Tk()
-root.config(background="red")
-terminal = Terminal(root)
+# root = tk.Tk()
+# root.config(background="red")
+# terminal = Terminal(root)
 
-terminal.pack(fill=tk.BOTH, expand=True)
-root.mainloop()
+# terminal.pack(fill=tk.BOTH, expand=True)
+# root.mainloop()
 
