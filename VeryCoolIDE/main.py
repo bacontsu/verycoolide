@@ -3,6 +3,7 @@ import tkinter
 import platform
 import os    
 from tkinter import *
+import tkinter.font as TKFont
 from tkinter.messagebox import *
 from tkinter.filedialog import *
 from tkinter import messagebox
@@ -13,7 +14,9 @@ from utilities import *
 # Reminder that 2.0 is going to be a Alpha Build
 NotepadVer = "VeryCoolIDE Alpha 2.0"
 WindowsVer = platform.platform()
+
 class Notepad:
+
     __root = Tk()
     
     def add_terminal(self, terminal):
@@ -150,8 +153,8 @@ class Notepad:
         showinfo("VeryCoolIDE - IDE Version",NotepadVer)
         showinfo("VeryCoolIDE - Windows Version",WindowsVer)
   
-    def RaiseExeption(self, string):
-        messagebox.showerror("Exeption Found!", string)
+    def RaiseException (self, string):
+        messagebox.showerror("Exception  Found!", string)
 
     def __openFile(self):
           
