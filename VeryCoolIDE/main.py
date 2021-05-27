@@ -5,6 +5,7 @@ import os
 from tkinter import *
 from tkinter.messagebox import *
 from tkinter.filedialog import *
+from tkinter import messagebox
 
 # Reminder that 2.0 is going to be a Alpha Build
 NotepadVer = "VeryCoolIDE Alpha 2.0"
@@ -141,6 +142,9 @@ class Notepad:
         showinfo("VeryCoolIDE - IDE Version",NotepadVer)
         showinfo("VeryCoolIDE - Windows Version",WindowsVer)
   
+    def RaiseExeption(self, string):
+        messagebox.showerror("Exeption Found!", string)
+
     def __openFile(self):
           
         self.__file = askopenfilename(defaultextension=".txt",
@@ -221,6 +225,7 @@ class Notepad:
         # Run main application
         self.__root.mainloop()
         print(NotepadVer)
+        
 
 
   
@@ -230,3 +235,4 @@ class Notepad:
 # Run main application
 notepad = Notepad(width=2000,height=1000)
 notepad.run()
+#notepad.RaiseExeption("Testing Testing")
