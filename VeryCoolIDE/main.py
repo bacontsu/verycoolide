@@ -6,6 +6,8 @@ from tkinter import *
 from tkinter.messagebox import *
 from tkinter.filedialog import *
 
+from terminal import Terminal
+
 # Reminder that 2.0 is going to be a Alpha Build
 NotepadVer = "VeryCoolIDE Alpha 2.0"
 WindowsVer = platform.platform()
@@ -19,6 +21,7 @@ class Notepad:
     __thisWidth = 1200
     __thisHeight = 1200
     __thisTextArea = Text(__root)
+    terminal = Terminal(__root)
     __thisMenuBar = Menu(__root)
     __thisFileMenu = Menu(__thisMenuBar, tearoff=0)
     __thisEditMenu = Menu(__thisMenuBar, tearoff=0)
@@ -69,10 +72,12 @@ class Notepad:
   
         # To make the textarea auto resizable
         self.__root.grid_rowconfigure(0, weight=1)
+        self.__root.grid_rowconfigure(1, weight=1)
         self.__root.grid_columnconfigure(0, weight=1)
   
         # Add controls (widget)
-        self.__thisTextArea.grid(sticky = N + E + S + W)
+        self.__thisTextArea.grid(sticky = N + E + S + W, row=0,column=0)
+        self.terminal.grid(sticky = N + E + S + W, row=1,column=0)
           
         # To open new file
         self.__thisFileMenu.add_command(label="New",
@@ -211,8 +216,8 @@ class Notepad:
             dir_cmd = "cd {0}".format(os.path.dirname(self.__file))
             build_cmd = "python {1}".format(os.getcwd(), self.__file)
             print("{0} && {1}".format(dir_cmd, build_cmd))
-            # terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
-            os.system("{0} && {1}".format(dir_cmd, build_cmd))
+            self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
+            # os.system("{0} && {1}".format(dir_cmd, build_cmd))
 
 
   
@@ -228,5 +233,5 @@ class Notepad:
   
   
 # Run main application
-notepad = Notepad(width=2000,height=1000)
+notepad = Notepad(width=1500,height=800)
 notepad.run()
