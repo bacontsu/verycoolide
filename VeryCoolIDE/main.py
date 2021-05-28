@@ -15,6 +15,9 @@ from utilities import *
 NotepadVer = "VeryCoolIDE Alpha 2.0"
 WindowsVer = platform.platform()
 
+
+
+    
 class Notepad:
 
     __root = Tk()
@@ -41,7 +44,7 @@ class Notepad:
   
         # Set icon
         try:
-            self.__root.wm_iconbitmap("Notepad.ico") 
+            self.__root.wm_iconbitmap("IDE.ico") 
         except:
             pass
   
