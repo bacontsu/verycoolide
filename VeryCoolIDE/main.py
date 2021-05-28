@@ -34,6 +34,7 @@ class Notepad:
     __thisFileMenu = Menu(__thisMenuBar, tearoff=0)
     __thisEditMenu = Menu(__thisMenuBar, tearoff=0)
     __thisRunMenu = Menu(__thisMenuBar, tearoff=0)
+    __thisSettingsMenu = Menu(__thisMenuBar, tearoff=0)
     __thisHelpMenu = Menu(__thisMenuBar, tearoff=0)
       
     # To add scrollbar
@@ -109,8 +110,7 @@ class Notepad:
         # To give a feature of cut 
         self.__thisEditMenu.add_command(label="Cut",
                                         command=self.__cut)   
-        # Settings main button        
-      
+   
         # to give a feature of copy    
         self.__thisEditMenu.add_command(label="Copy",
                                         command=self.__copy)         
@@ -130,12 +130,20 @@ class Notepad:
         # To give a feature of running & debugging
         self.__thisMenuBar.add_cascade(label="Run",
                                        menu=self.__thisRunMenu)  
-          
+        # Settings main button        
+        self.__thisMenuBar.add_cascade(label="Settings",
+                                       menu=self.__thisSettingsMenu) 
+
+        self.__thisSettingsMenu.add_command(label="Settings",
+                                        command=self.__showAbout)         
+
         # To create a feature of description of the notepad
         self.__thisHelpMenu.add_command(label="About VeryCoolIDE",
                                         command=self.__showAbout) 
         self.__thisMenuBar.add_cascade(label="Help",
                                        menu=self.__thisHelpMenu)
+
+ 
   
         self.__root.config(menu=self.__thisMenuBar)
   
@@ -249,4 +257,4 @@ class Notepad:
 # Run main application
 notepad = Notepad(width=1500,height=800)
 notepad.run()
-#notepad.RaiseExeption("Testing Testing")
+
