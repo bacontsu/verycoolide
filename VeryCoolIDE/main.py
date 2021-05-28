@@ -7,12 +7,14 @@ import tkinter.font as TKFont
 from tkinter.messagebox import *
 from tkinter.filedialog import *
 from tkinter import messagebox
+import webbrowser
+
 
 from terminal import Terminal
 from utilities import *
 
-# Reminder that 2.0 is going to be a Alpha Build
-NotepadVer = "VeryCoolIDE Alpha 2.0"
+# Notepad Version
+NotepadVer = "VeryCoolIDE Pre-Alpha 2.5"
 WindowsVer = platform.platform()
 
 
@@ -138,6 +140,7 @@ class Notepad:
                                         command=self.__showAbout)         
 
         # To create a feature of description of the notepad
+
         self.__thisHelpMenu.add_command(label="About VeryCoolIDE",
                                         command=self.__showAbout) 
         self.__thisMenuBar.add_cascade(label="Help",
