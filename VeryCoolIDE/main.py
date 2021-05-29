@@ -127,7 +127,10 @@ class Notepad:
 
         # To give a feature of running the script
         self.__thisRunMenu.add_command(label="Run",
-                                        command=self.__coderun)  
+                                        command=self.__coderun)
+
+        self.__thisRunMenu.add_command(label="Compile",
+                                        command=self.__codecompile) 
         
         # To give a feature of running & debugging
         self.__thisMenuBar.add_cascade(label="Run",
@@ -137,7 +140,7 @@ class Notepad:
                                        menu=self.__thisSettingsMenu) 
 
         self.__thisSettingsMenu.add_command(label="Settings",
-                                        command=self.__showAbout)         
+                                        command=print("Not Finished in Alpha 2.5 Build!"))         
 
         # To create a feature of description of the notepad
 
@@ -242,6 +245,15 @@ class Notepad:
             print("{0} && {1}".format(dir_cmd, build_cmd))
             self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
             # os.system("{0} && {1}".format(dir_cmd, build_cmd))
+
+    def __codecompile(self, *args):
+        print("Not Finished in Alpha 2.5 Build!")
+        #if self.__file is not None:
+            #dir_cmd = "cd {0}".format(os.path.dirname(self.__file))
+            #build_cmd = "pyinstaller  {1}".format(os.getcwd(), self.__file)
+            #print("{0} && {1}".format(dir_cmd, build_cmd))
+            #self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
+            # (os.system("{0} && {1}".format(dir_cmd, build_cmd))
 
 
   
