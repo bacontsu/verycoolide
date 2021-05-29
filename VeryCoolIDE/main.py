@@ -1,7 +1,8 @@
 
 import tkinter
 import platform
-import os    
+import os  
+# import asyncio  
 from tkinter import *
 import tkinter.font as TKFont
 from tkinter.messagebox import *
@@ -140,7 +141,7 @@ class Notepad:
                                        menu=self.__thisSettingsMenu) 
 
         self.__thisSettingsMenu.add_command(label="Settings",
-                                        command=print("Not Finished in Alpha 2.5 Build!"))         
+                                        command=self.__settings)         
 
         # To create a feature of description of the notepad
 
@@ -167,11 +168,42 @@ class Notepad:
         # exit()
   
     def __showAbout(self):
-        showinfo("VeryCoolIDE - IDE Version",NotepadVer)
-        showinfo("VeryCoolIDE - Windows Version",WindowsVer)
-  
-    def RaiseException (self, string):
+        showinfo("About VeryCoolIDE",f"IDE Version: {NotepadVer}\n, Operating System: {WindowsVer}")
+    
+    def __settings(self):
+        print("Not Finished in Alpha 2.5 Build!")
+
+    def raise_exception(self, string):
         messagebox.showerror("Exception  Found!", string)
+    
+    def raise_python_not_found_exception(self):
+        messagebox.showerror(
+            "Python Installation not Found!",
+            "Python (3.x) not installed, or not in PATH.\nMake sure python is in path to continue execution."
+        )
+
+    def raise_pyinstaller_not_found_exception(self):
+        install = messagebox.askyesno(
+            "Pyinstaller not Installed!",
+            "Proceed to install pyinstaller?"
+        )
+        if ans:
+            install_pyinstaller_cmd = "pip install pyinstaller"
+            self.terminal.automation("{0}".format(install_pyinstaller_cmd))
+    
+    def check_python(self):
+        if check_python_installation():
+            return True
+        else:
+            self.raise_python_not_found_exception()
+            return False
+
+    def check_pyinstaller(self):
+        if check_pyinstaller_installation():
+            return True
+        else:
+            self.raise_pyinstaller_not_found_exception()
+            return False
 
     def __openFile(self):
           
@@ -239,19 +271,27 @@ class Notepad:
         self.__thisTextArea.event_generate("<<Paste>>")
 
     def __coderun(self, *args):
-        if self.__file is not None:
-            dir_cmd = "cd {0}".format(os.path.dirname(self.__file))
-            build_cmd = "python {1}".format(os.getcwd(), self.__file)
-            self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
+        if self.__file is None:
+            return
+        if not self.check_python():
+            return
+        dir_cmd = "cd {0}".format(os.path.dirname(self.__file))
+        build_cmd = "python {1}".format(os.getcwd(), self.__file)
+        self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
 
     def __codecompile(self, *args):
-        print("Not Finished in Alpha 2.5 Build!")
-        if self.__file is not None:
-            dir_cmd = "cd {0}".format(os.path.dirname(self.__file))
-            build_cmd = "pyinstaller  -F {1}".format(os.getcwd(), self.__file)
-            print("{0} && {1}".format(dir_cmd, build_cmd))
-            self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
+        if self.__file is None:
+            return
 
+        # loop = asyncio.get_event_loop()
+        # checks = loop.create_task(self.check_pyinstaller())
+        # loop.run_until_complete(checks)
+
+        if not self.check_python() or not self.check_pyinstaller():
+            return
+        dir_cmd = "cd {0}".format(os.path.dirname(self.__file))
+        build_cmd = "pyinstaller  -F {1}".format(os.getcwd(), self.__file)
+        self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
 
   
     def run(self):
@@ -261,11 +301,6 @@ class Notepad:
         print(NotepadVer)
         
 
-
-  
-  
-  
-  
 # Run main application
 notepad = Notepad(width=1500,height=800)
 notepad.run()
