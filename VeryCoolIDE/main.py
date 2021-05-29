@@ -242,18 +242,15 @@ class Notepad:
         if self.__file is not None:
             dir_cmd = "cd {0}".format(os.path.dirname(self.__file))
             build_cmd = "python {1}".format(os.getcwd(), self.__file)
-            print("{0} && {1}".format(dir_cmd, build_cmd))
             self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
-            # os.system("{0} && {1}".format(dir_cmd, build_cmd))
 
     def __codecompile(self, *args):
         print("Not Finished in Alpha 2.5 Build!")
-        #if self.__file is not None:
-            #dir_cmd = "cd {0}".format(os.path.dirname(self.__file))
-            #build_cmd = "pyinstaller  {1}".format(os.getcwd(), self.__file)
-            #print("{0} && {1}".format(dir_cmd, build_cmd))
-            #self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
-            # (os.system("{0} && {1}".format(dir_cmd, build_cmd))
+        if self.__file is not None:
+            dir_cmd = "cd {0}".format(os.path.dirname(self.__file))
+            build_cmd = "pyinstaller  -F {1}".format(os.getcwd(), self.__file)
+            print("{0} && {1}".format(dir_cmd, build_cmd))
+            self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
 
 
   
