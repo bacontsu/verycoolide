@@ -168,7 +168,7 @@ class Notepad:
         # exit()
   
     def __showAbout(self):
-        showinfo("About VeryCoolIDE",f"IDE Version: {NotepadVer}\n, Operating System: {WindowsVer}")
+        showinfo("About VeryCoolIDE",f"IDE Version: {NotepadVer}\nOperating System: {WindowsVer}")
     
     def __settings(self):
         print("Not Finished in Alpha 2.5 Build!")
