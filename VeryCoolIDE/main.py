@@ -9,19 +9,24 @@ from tkinter.messagebox import *
 from tkinter.filedialog import *
 from tkinter import messagebox
 import webbrowser
+from ttkthemes import ThemedStyle
+
+
 
 
 from terminal import Terminal
 from utilities import *
 
 # Notepad Version
-NotepadVer = "VeryCoolIDE Pre-Alpha 2.5"
+NotepadVer = "VeryCoolIDE Public Alpha 1.0"
 WindowsVer = platform.platform()
 
 
 
     
 class Notepad:
+
+
 
     __root = Tk()
     
@@ -43,9 +48,13 @@ class Notepad:
     # To add scrollbar
     __thisScrollBar = Scrollbar(__thisTextArea)     
     __file = None
+
+
+
+
+
   
     def __init__(self,**kwargs):
-  
         # Set icon
         try:
             self.__root.wm_iconbitmap("IDE.ico") 
@@ -66,6 +75,8 @@ class Notepad:
   
         # Set the window text
         self.__root.title("Untitled - VeryCoolIDE")
+
+
   
         # Center the window
         screenWidth = 1200 #self.__root.winfo_screenwidth()
@@ -136,12 +147,9 @@ class Notepad:
         # To give a feature of running & debugging
         self.__thisMenuBar.add_cascade(label="Run",
                                        menu=self.__thisRunMenu)  
-        # Settings main button        
-        self.__thisMenuBar.add_cascade(label="Settings",
-                                       menu=self.__thisSettingsMenu) 
 
-        self.__thisSettingsMenu.add_command(label="Settings",
-                                        command=self.__settings)         
+
+        
 
         # To create a feature of description of the notepad
 
@@ -170,8 +178,7 @@ class Notepad:
     def __showAbout(self):
         showinfo("About VeryCoolIDE",f"IDE Version: {NotepadVer}\nOperating System: {WindowsVer}")
     
-    def __settings(self):
-        print("Not Finished in Alpha 2.5 Build!")
+
 
     def raise_exception(self, string):
         messagebox.showerror("Exception  Found!", string)
