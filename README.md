@@ -1,4 +1,6 @@
 # verycoolide
  The Only Good Python IDE outside Oreo
 
-Please Make your own Fork if you want to add something!
+# What's in the Repo
+ The Uncompiled source code for the entire IDE
+
