@@ -227,10 +227,6 @@ class Notepad:
         # exit()
   
     def __showAbout(self):
-
-        f = open("name.txt", "r")
-        name   = f.read()
-        f.close()
         showinfo("About VeryCoolIDE",f"IDE Version: {NotepadVer}\nOperating System: {WindowsVer}")
     
 
