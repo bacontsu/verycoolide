@@ -1,5 +1,5 @@
 
-import tkinter
+import tkinter as tk
 import platform
 import os  
 # import asyncio  
@@ -9,24 +9,28 @@ from tkinter.messagebox import *
 from tkinter.filedialog import *
 from tkinter import messagebox
 import webbrowser
-from ttkthemes import ThemedStyle
+import json
 
 
 
 
-from terminal import Terminal
-from utilities import *
+
+from utils.terminal import Terminal
+from utils.utilities import *
+from utils.statusbar import StatusBar
 
 # Notepad Version
-NotepadVer = "VeryCoolIDE Public Alpha 1.0"
+NotepadVer = "VeryCoolIDE v2 Alpha"
+# Windows Version
 WindowsVer = platform.platform()
+
+# User Account
+#name = "default"
 
 
 
     
 class Notepad:
-
-
 
     __root = Tk()
     
@@ -44,6 +48,7 @@ class Notepad:
     __thisRunMenu = Menu(__thisMenuBar, tearoff=0)
     __thisSettingsMenu = Menu(__thisMenuBar, tearoff=0)
     __thisHelpMenu = Menu(__thisMenuBar, tearoff=0)
+    __thisDevMenu = Menu(__thisMenuBar, tearoff=0)
       
     # To add scrollbar
     __thisScrollBar = Scrollbar(__thisTextArea)     
@@ -56,10 +61,10 @@ class Notepad:
   
     def __init__(self,**kwargs):
         # Set icon
-        try:
-            self.__root.wm_iconbitmap("IDE.ico") 
-        except:
-            pass
+        #try:
+            #self.__root.wm_iconbitmap("IDE.ico") 
+        #except:
+            #pass
   
         # Set window size (the default is 300x300)
   
@@ -97,6 +102,8 @@ class Notepad:
         self.__root.grid_rowconfigure(0, weight=1)
         self.__root.grid_rowconfigure(1, weight=1)
         self.__root.grid_columnconfigure(0, weight=1)
+
+
   
         # Add controls (widget)
         self.__thisTextArea.grid(sticky = N + E + S + W, row=0,column=0)
@@ -119,7 +126,8 @@ class Notepad:
         self.__thisFileMenu.add_command(label="Exit",
                                         command=self.__quitApplication)
         self.__thisMenuBar.add_cascade(label="File",
-                                       menu=self.__thisFileMenu)     
+                                       menu=self.__thisFileMenu)  
+
           
         # To give a feature of cut 
         self.__thisEditMenu.add_command(label="Cut",
@@ -149,7 +157,7 @@ class Notepad:
                                        menu=self.__thisRunMenu)  
 
 
-        
+
 
         # To create a feature of description of the notepad
 
@@ -157,6 +165,11 @@ class Notepad:
                                         command=self.__showAbout) 
         self.__thisMenuBar.add_cascade(label="Help",
                                        menu=self.__thisHelpMenu)
+
+
+
+        self.__thisDevMenu.add_cascade(label="Dev Features",
+                                        menu=self.__thisDevMenu)   
 
  
   
@@ -168,20 +181,62 @@ class Notepad:
         self.__thisScrollBar.config(command=self.__thisTextArea.yview)     
         self.__thisTextArea.config(yscrollcommand=self.__thisScrollBar.set)
 
+
         center(self.__root, self.__thisWidth, self.__thisHeight)
-      
-          
+
+        self.statusbar = Frame(self.__root)
+        self.statusbar.grid(row=2, column=0, columnspan=2, sticky=EW)
+
+        self.line_column_info = Label(self.statusbar, text="Ln 1, Col 1")
+        self.line_column_info.pack(fill=BOTH, side=RIGHT, padx=10)
+
+        self.__root.grid_rowconfigure(1, weight=1)
+
+        self.bind_key_release()
+        self.bind_button_release()
+
+    # KeyBinds
+    # ---
+    def bind_key_release(self):
+        self.__thisTextArea.bind('<KeyRelease>', self.key_release)
+    def bind_button_release(self):
+        self.__thisTextArea.bind('<ButtonRelease>', self.button_release)
+
+    # ---
+
+    def key_release(self, *args):
+        # add syntax highlighting trigger, etc here.
+        # ...
+
+        self.update_line_column_info()
+
+    def button_release(self, *args):
+        self.update_line_column_info()
+
+
+    def get_line_column_info(self):
+        line, column = self.__thisTextArea.index(tk.INSERT).split('.')
+        return line, column
+
+    def update_line_column_info(self):
+        line, column = self.get_line_column_info()
+        self.line_column_info.config(text=f"Ln {int(line)}, Col {int(column) + 1}")
+
     def __quitApplication(self):
         self.__root.destroy()
         # exit()
   
     def __showAbout(self):
+
+        f = open("name.txt", "r")
+        name   = f.read()
+        f.close()
         showinfo("About VeryCoolIDE",f"IDE Version: {NotepadVer}\nOperating System: {WindowsVer}")
     
 
 
     def raise_exception(self, string):
-        messagebox.showerror("Exception  Found!", string)
+        messagebox.showerror("Exception Found!", string)
     
     def raise_python_not_found_exception(self):
         messagebox.showerror(
@@ -216,7 +271,8 @@ class Notepad:
           
         self.__file = askopenfilename(defaultextension=".txt",
                                       filetypes=[("All Files","*.*"),
-                                        ("Text Documents","*.txt")])
+                                                ("Text Documents","*.txt"),
+                                                ("VCM Text File","*.vcm")])
   
         if self.__file == "":
               
@@ -248,7 +304,9 @@ class Notepad:
             self.__file = asksaveasfilename(initialfile='Untitled.txt',
                                             defaultextension=".txt",
                                             filetypes=[("All Files","*.*"),
-                                                ("Text Documents","*.txt")])
+                                                ("Text Documents","*.txt"),
+                                                ("VCM Text File","*.vcm")])
+
   
             if self.__file == "":
                 self.__file = None
@@ -300,15 +358,29 @@ class Notepad:
         build_cmd = "pyinstaller  -F {1}".format(os.getcwd(), self.__file)
         self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
 
+    def Panic(self, string):
+        print("PANIC FOUND:", string)
+
+
   
     def run(self):
 
+        print(NotepadVer)
+        #self.raise_exception("WIP Build")
         # Run main application
         self.__root.mainloop()
         print(NotepadVer)
         
+        
+
+
+
+
+
+        
 
 # Run main application
 notepad = Notepad(width=1500,height=800)
+
 notepad.run()
 
