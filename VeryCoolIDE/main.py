@@ -20,7 +20,7 @@ from utils.utilities import *
 from utils.statusbar import StatusBar
 
 # Notepad Version
-NotepadVer = "VeryCoolIDE v2 Alpha"
+NotepadVer = "VeryCoolIDE 1.0 Release"
 # Windows Version
 WindowsVer = platform.platform()
 
