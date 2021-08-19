@@ -11,10 +11,6 @@ from tkinter import messagebox
 import webbrowser
 import json
 
-
-
-
-
 from utils.terminal import Terminal
 from utils.utilities import *
 from utils.statusbar import StatusBar
@@ -33,6 +29,9 @@ WindowsVer = platform.platform()
 class Notepad:
 
     __root = Tk()
+
+    __root.tk.call("source", "sun-valley.tcl")
+    __root.tk.call("set_theme", "light")
     
     def add_terminal(self, terminal):
         self.terminal = terminal
