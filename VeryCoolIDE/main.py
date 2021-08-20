@@ -15,15 +15,18 @@ from utils.terminal import Terminal
 from utils.utilities import *
 from utils.statusbar import StatusBar
 
-# Notepad Version
-NotepadVer = "VeryCoolIDE 1.0 Release"
+# IDE Version
+NotepadVer = "VeryCoolIDE"
 # Windows Version
 WindowsVer = platform.platform()
 
 # User Account
 #name = "default"
 
-
+# Theme Colour 
+# dark = Default
+# light = Optional
+settings = "dark"
 
     
 class Notepad:
@@ -31,7 +34,7 @@ class Notepad:
     __root = Tk()
 
     __root.tk.call("source", "sun-valley.tcl")
-    __root.tk.call("set_theme", "light")
+    __root.tk.call("set_theme", settings)
     
     def add_terminal(self, terminal):
         self.terminal = terminal
