@@ -46,6 +46,8 @@ def a_changed(event):
 a.bind('<<ComboboxSelected>>', a_changed)
 
 window.title("VeryCoolIDE - Settings")
+reboot = tk.Label(text="Please Restart VCIDE After choosing your theme!")
+reboot.pack() 
 window.mainloop()
 
 
