@@ -4,6 +4,7 @@ import platform
 import os  
 # import asyncio  
 from tkinter import *
+from data import *
 from tkinter import ttk
 import tkinter.font as TKFont
 from tkinter.messagebox import *
@@ -15,6 +16,7 @@ import json
 from utils.terminal import Terminal
 from utils.utilities import *
 from utils.statusbar import StatusBar
+from utils.vcscroll import VeryCoolScrollbar
 
 # IDE Version
 NotepadVer = "VeryCoolIDE"
@@ -34,20 +36,16 @@ with open("config/theme.txt",'r') as theme:
 
     
 class Notepad:
-
     __root = Tk()
 
-    __root.tk.call("source", "sun-valley.tcl")
-    __root.tk.call("set_theme", themecolour)
-    
     def add_terminal(self, terminal):
         self.terminal = terminal
   
     # default window width and height
     __thisWidth = 1200
     __thisHeight = 1200
-    __thisTextArea = Text(__root)
-    terminal = Terminal(__root)
+    __thisTextArea = Text(__root, font=fira_code)
+    terminal = None
     __thisMenuBar = Menu(__root)
     __thisFileMenu = Menu(__thisMenuBar, tearoff=0)
     __thisEditMenu = Menu(__thisMenuBar, tearoff=0)
@@ -57,16 +55,21 @@ class Notepad:
     __thisDevMenu = Menu(__thisMenuBar, tearoff=0)
       
     # To add scrollbar
-    __thisScrollBar = ttk.Scrollbar(__thisTextArea)     
+    __thisScrollBar = VeryCoolScrollbar(__thisTextArea)     
     __file = None
 
   
     def __init__(self,**kwargs):
+        self.__root.tk.call("source", "sun-valley.tcl")
+        self.__root.tk.call("set_theme", themecolour)
+
+        self.terminal = Terminal(self.__root, fira_code, themecolour)
+
         # Set icon
-        #try:
-            #self.__root.wm_iconbitmap("IDE.ico") 
-        #except:
-            #pass
+        try:
+            self.__root.wm_iconbitmap("IDE.ico") 
+        except:
+            pass
   
         # Set window size (the default is 300x300)
   
@@ -176,7 +179,8 @@ class Notepad:
   
         self.__root.config(menu=self.__thisMenuBar)
   
-        self.__thisScrollBar.pack(side=RIGHT,fill=Y)                    
+        self.__thisScrollBar.pack(side=RIGHT, fill=Y)
+        self.__thisScrollBar.save_pack_data(side=RIGHT, fill=Y)                
           
         # Scrollbar will adjust automatically according to the content        
         self.__thisScrollBar.config(command=self.__thisTextArea.yview)     
@@ -187,8 +191,8 @@ class Notepad:
 
         self.statusbar = Frame(self.__root)
         self.statusbar.grid(row=2, column=0, columnspan=2, sticky=EW)
-
-        self.line_column_info = Label(self.statusbar, text="Ln 1, Col 1")
+        self.statusbar.config(bg="#007acc")
+        self.line_column_info = Label(self.statusbar, text="Ln 1, Col 1", bg="#007acc", fg="#ffffff")
         self.line_column_info.pack(fill=BOTH, side=RIGHT, padx=10)
 
         self.__root.grid_rowconfigure(1, weight=1)
@@ -366,17 +370,8 @@ class Notepad:
         #self.raise_exception("WIP Build")
         # Run main application
         self.__root.mainloop()
-        
-        
 
-
-
-
-
-        
 
 # Run main application
 notepad = Notepad(width=1500,height=800)
-
 notepad.run()
-

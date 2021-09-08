@@ -1,27 +1,19 @@
 import tkinter as tk
+from tkinter import ttk
 import subprocess
 import queue
 import os
 from threading import Thread
 
-
-class OreoScrollbar(tk.Scrollbar):
-    def save_pack_data(self, *args, **kwargs):
-        self.pack_data = kwargs
-    def set(self, low, high):
-        if float(low) <= 0.0 and float(high) >= 1.0:
-            self.tk.call("pack", "forget", self)
-        else:
-            self.pack(self.pack_data)
-        tk.Scrollbar.set(self, low, high)
+from utils.vcscroll import VeryCoolScrollbar
 
 
 class Terminal(tk.Frame):
-    def __init__(self, parent=None, font="consolas", interactive=False, *args, **kwargs):
+    def __init__(self, parent=None, font="consolas", themecolor="dark", interactive=False, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        self.config(background="#007acc")
-        self.create_widgets(font)
+        # self.config(background="#007acc")
+        self.create_widgets(font, themecolor)
 
         if interactive:
             consolePath = os.path.join(os.path.dirname(__file__),"interactive.py")
@@ -64,6 +56,7 @@ class Terminal(tk.Frame):
         # write exit() to the console in order to stop it running
         self.p.stdin.write("exit()\n".encode())
         self.p.stdin.flush()
+        
         # call the destroy methods to properly destroy widgets
         self.ttyText.destroy()
         tk.Frame.destroy(self)
@@ -112,14 +105,19 @@ class Terminal(tk.Frame):
         self.ttyText.see(tk.END)
         self.line_start += len(string)
 
-    def create_widgets(self, font):
+    def create_widgets(self, font, themecolor):
+        if themecolor == 'dark':
+            self.fontcolor = "#494949"
+        else:
+            self.fontcolor = "#5D5F66"
+
         self.ttyText = tk.Text(
             self, wrap=tk.WORD, height=16, 
-            font=font, fg="#494949", 
+            font=font, fg=self.fontcolor,
             padx=10, pady=10
         )
         
-        self.terminal_scrollbar = OreoScrollbar(self.ttyText)
+        self.terminal_scrollbar = VeryCoolScrollbar(self.ttyText)
 
         self.terminal_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         self.terminal_scrollbar.save_pack_data(side=tk.RIGHT, fill=tk.Y)
@@ -133,16 +131,3 @@ class Terminal(tk.Frame):
         self.ttyText.see(tk.END)
         self.enter("test")
         self.ttyText.insert(tk.END, "\n")
-
-
-# Standalone
-
-
-
-# root = tk.Tk()
-# root.config(background="red")
-# terminal = Terminal(root)
-
-# terminal.pack(fill=tk.BOTH, expand=True)
-# root.mainloop()
-
