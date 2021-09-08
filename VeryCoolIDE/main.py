@@ -56,12 +56,8 @@ class Notepad:
     __thisDevMenu = Menu(__thisMenuBar, tearoff=0)
       
     # To add scrollbar
-    __thisScrollBar = Scrollbar(__thisTextArea)     
+    __thisScrollBar = ttk.Scrollbar(__thisTextArea)     
     __file = None
-
-
-
-
 
   
     def __init__(self,**kwargs):
