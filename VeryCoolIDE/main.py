@@ -4,6 +4,7 @@ import platform
 import os  
 # import asyncio  
 from tkinter import *
+from tkinter import ttk
 import tkinter.font as TKFont
 from tkinter.messagebox import *
 from tkinter.filedialog import *
