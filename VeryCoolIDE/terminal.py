@@ -1,11 +1,12 @@
 import tkinter as tk
+from tkinter import ttk
 import subprocess
 import queue
 import os
 from threading import Thread
 
 
-class OreoScrollbar(tk.Scrollbar):
+class OreoScrollbar(ttk.Scrollbar):
     def save_pack_data(self, *args, **kwargs):
         self.pack_data = kwargs
     def set(self, low, high):
@@ -64,6 +65,7 @@ class Terminal(tk.Frame):
         # write exit() to the console in order to stop it running
         self.p.stdin.write("exit()\n".encode())
         self.p.stdin.flush()
+        
         # call the destroy methods to properly destroy widgets
         self.ttyText.destroy()
         tk.Frame.destroy(self)
@@ -133,16 +135,3 @@ class Terminal(tk.Frame):
         self.ttyText.see(tk.END)
         self.enter("test")
         self.ttyText.insert(tk.END, "\n")
-
-
-# Standalone
-
-
-
-# root = tk.Tk()
-# root.config(background="red")
-# terminal = Terminal(root)
-
-# terminal.pack(fill=tk.BOTH, expand=True)
-# root.mainloop()
-
