@@ -23,10 +23,13 @@ WindowsVer = platform.platform()
 # User Account
 #name = "default"
 
+with open("config/theme.txt",'r') as theme:
+    themecolour = theme.readlines()
+
 # Theme Colour 
 # dark = Default
 # light = Optional
-settings = "dark"
+#settings = "dark"
 
     
 class Notepad:
@@ -34,7 +37,7 @@ class Notepad:
     __root = Tk()
 
     __root.tk.call("source", "sun-valley.tcl")
-    __root.tk.call("set_theme", settings)
+    __root.tk.call("set_theme", themecolour)
     
     def add_terminal(self, terminal):
         self.terminal = terminal
@@ -162,7 +165,8 @@ class Notepad:
 
 
         # To create a feature of description of the notepad
-
+        self.__thisHelpMenu.add_command(label="Settings",
+                                        command=self.OpenSettings) 
         self.__thisHelpMenu.add_command(label="About VeryCoolIDE",
                                         command=self.__showAbout) 
         self.__thisMenuBar.add_cascade(label="Help",
@@ -170,8 +174,6 @@ class Notepad:
 
 
 
-        self.__thisDevMenu.add_cascade(label="Dev Features",
-                                        menu=self.__thisDevMenu)   
 
  
   
@@ -356,18 +358,17 @@ class Notepad:
         build_cmd = "pyinstaller  -F {1}".format(os.getcwd(), self.__file)
         self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
 
-    def Panic(self, string):
-        print("PANIC FOUND:", string)
+    def OpenSettings(self):
+        print("WIP")
+        os.system("python settingsmenu.py")
 
 
   
     def run(self):
 
-        print(NotepadVer)
         #self.raise_exception("WIP Build")
         # Run main application
         self.__root.mainloop()
-        print(NotepadVer)
         
         
 
