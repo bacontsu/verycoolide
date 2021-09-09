@@ -1,0 +1,10 @@
+{  
+    "highlight": {
+        "string": "green",
+        "number": "red",
+        "if_else": "#D3AD0F",
+        "print": "#BF0BE7",
+        "method": "#0BE7BF",
+        "keywords": "#0B40E7"
+    }
+}
