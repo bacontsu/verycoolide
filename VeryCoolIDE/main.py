@@ -339,8 +339,10 @@ class Notepad:
         self.__thisTextArea.event_generate("<<Paste>>")
 
     def __coderun(self, *args):
+
         if self.__file is None:
-            return
+           messagebox.showerror("VCIDE", "Please Save your work before attempting to run!")
+           return 
         if not self.check_python():
             return
         dir_cmd = "cd {0}".format(os.path.dirname(self.__file))
@@ -362,7 +364,6 @@ class Notepad:
         self.terminal.automation("{0} && {1}".format(dir_cmd, build_cmd))
 
     def OpenSettings(self):
-        print("WIP")
         os.system("python settingsmenu.py")
 
 
