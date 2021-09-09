@@ -17,6 +17,7 @@ from utils.terminal import Terminal
 from utils.utilities import *
 from utils.statusbar import StatusBar
 from utils.vcscroll import VeryCoolScrollbar
+from utils.highlighting import HighLighter
 
 # IDE Version
 NotepadVer = "VeryCoolIDE"
@@ -112,6 +113,7 @@ class Notepad:
   
         # Add controls (widget)
         self.__thisTextArea.grid(sticky = N + E + S + W, row=0,column=0)
+        self.SyntaxHighlight()
         self.terminal.grid(sticky = N + E + S + W, row=1,column=0)
           
         # To open new file
@@ -370,6 +372,11 @@ class Notepad:
         #self.raise_exception("WIP Build")
         # Run main application
         self.__root.mainloop()
+
+    def SyntaxHighlight(self):
+        Lighter = HighLighter(self.__thisTextArea)
+        
+        self.__thisTextArea.bind("<Key>", Lighter.Highlight)
 
 
 # Run main application
